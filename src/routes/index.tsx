@@ -24,6 +24,7 @@ import journal1 from "@/assets/journal-1.jpg";
 import journal2 from "@/assets/journal-2.jpg";
 import journal3 from "@/assets/journal-3.jpg";
 import knitCrop from "@/assets/details/detail-knit-camel.jpg";
+import poloCollarDetail from "@/assets/details/detail-polo-sage.jpg";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -34,13 +35,15 @@ function Home() {
     <SiteShell>
       <Hero />
       <Marquee />
+      <CategoryMosaic />
       <NewIn />
-      <Featured />
       <CategorySection category="Polos" eyebrow="The Polo Edit" title="Premium Polos." description="Pima cotton piqué — tailored for warm afternoons and quiet evenings." shopSlug="polos" />
       <CategorySection category="Linen Shirts" eyebrow="European Flax" title="Linen Shirts." description="Woven from European flax. Worn from morning espresso to last light." tone="cream" shopSlug="linen-shirts" />
       <Editorial />
+      <LookbookBanner />
       <CategorySection category="Chinos" eyebrow="The Chino Series" title="Tailored Chinos." description="Garment-dyed essentials, cut for movement and stillness alike." shopSlug="chinos" />
       <GurkhaSignature />
+      <CraftDetails />
       <CategorySection category="Gurkhas" eyebrow="Signature" title="The Gurkha Trouser." description="Self-belted, double-pleated, structured. Tailoring without noise." tone="cream" shopSlug="gurkhas" />
       <Capsule />
       <NewLines />
@@ -105,7 +108,7 @@ function Hero() {
           transition={{ delay: 0.55, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
           className="mt-5 max-w-4xl font-display text-[44px] leading-[1.02] text-cream text-balance md:text-7xl lg:text-[88px]"
         >
-          Quiet Luxury<br />for the New Generation.
+          Quiet <span className="italic">Luxury</span><br />for the New Generation.
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -170,7 +173,7 @@ function Marquee() {
 function NewIn() {
   const items = newArrivals().slice(0, 4);
   return (
-    <section className="bg-background py-24 md:py-32">
+    <section id="new-in" className="bg-cream py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="flex items-end justify-between gap-6">
           <SectionHeader
@@ -229,25 +232,113 @@ function NewLines() {
   );
 }
 
-function Featured() {
+function CategoryMosaic() {
+  const tiles: { cat: Category; slug: string; label: string; note: string; span?: string }[] = [
+    { cat: "Polos", slug: "polos", label: "Polos & Tees", note: "Pima piqué, 220 GSM", span: "md:col-span-2" },
+    { cat: "Linen Shirts", slug: "linen-shirts", label: "Linen Shirts", note: "European Flax®" },
+    { cat: "Gurkhas", slug: "gurkhas", label: "Gurkhas", note: "The signature" },
+    { cat: "Chinos", slug: "chinos", label: "Chinos & Trousers", note: "Garment-dyed" },
+    { cat: "Knitwear", slug: "knitwear", label: "Knitwear", note: "Extra-fine merino" },
+    { cat: "Footwear", slug: "footwear", label: "Footwear", note: "Numbered run", span: "md:col-span-2" },
+  ];
   return (
     <section className="bg-background py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="flex items-end justify-between gap-6">
-          <SectionHeader
-            eyebrow="Featured Collection"
-            title="The Essentials, Reimagined."
-            description="Four pieces. Endlessly composable. Cut for the next generation of quiet dressers."
-          />
-          <Link to="/shop/$category" params={{ category: "polos" }} className="hidden text-[11px] uppercase tracking-luxe text-foreground hover:text-gold md:block">
-            View all →
-          </Link>
-        </div>
-        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-8">
-          {(["Polos", "Linen Shirts", "Chinos", "Gurkhas"] as const).map((c, i) => {
-            const p = byCategory(c)[0];
-            return <ProductCard key={p.slug} product={p} index={i} />;
+        <SectionHeader
+          eyebrow="The House Lines"
+          title="Six Lines. One Wardrobe."
+          description="Every piece cut to live with the others — start anywhere."
+        />
+        <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          {tiles.map((t, i) => {
+            const p = byCategory(t.cat)[0];
+            const count = byCategory(t.cat).length;
+            return (
+              <Reveal key={t.slug} delay={i * 0.06} className={t.span}>
+                <Link
+                  to="/shop/$category"
+                  params={{ category: t.slug }}
+                  className="hover-zoom group relative block h-full overflow-hidden bg-cream"
+                >
+                  <img
+                    src={p.image}
+                    alt={t.label}
+                    loading="lazy"
+                    className="aspect-[4/5] w-full object-cover md:aspect-auto md:h-[420px]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+                    <div>
+                      <h3 className="font-display text-2xl text-cream">{t.label}</h3>
+                      <p className="mt-1 text-[10px] uppercase tracking-luxe text-cream/75">
+                        {t.note} — {count} {count === 1 ? "piece" : "pieces"}
+                      </p>
+                    </div>
+                    <span className="translate-y-2 text-[10px] uppercase tracking-luxe text-gold opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                      Shop →
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LookbookBanner() {
+  return (
+    <section className="relative h-[60vh] overflow-hidden md:h-[75vh]">
+      <img src={insta5} alt="The Riviera coastline" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/20 via-ink/30 to-ink/50" />
+      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col items-center justify-center px-6 text-center md:px-10">
+        <Reveal>
+          <p className="text-[11px] uppercase tracking-luxe text-gold">Lookbook — N° 02</p>
+          <h2 className="mt-4 font-display text-4xl text-cream text-balance md:text-6xl lg:text-7xl">
+            Il Dolce Far Niente.
+          </h2>
+          <p className="mx-auto mt-5 max-w-md text-base text-cream/85 md:text-lg">
+            The sweetness of doing nothing — dressed properly.
+          </p>
+          <Link
+            to="/journal"
+            className="mt-8 inline-flex items-center gap-2 border border-cream/60 px-7 py-4 text-[11px] uppercase tracking-luxe text-cream transition hover:border-gold hover:text-gold"
+          >
+            Open the lookbook <ArrowRight className="h-4 w-4" strokeWidth={1.4} />
+          </Link>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function CraftDetails() {
+  const details = [
+    { img: poloCollarDetail, title: "Mother-of-Pearl", copy: "Every polo closes with genuine shell buttons, dyed to tone and cross-stitched by hand." },
+    { img: gurkhaDetail, title: "Antique Brass", copy: "Gurkha hardware is sand-cast, tumbled, then aged — so it never glints, only glows." },
+    { img: knitCrop, title: "Hand-Linked Merino", copy: "Collars joined loop by loop on a linking machine older than the house itself." },
+  ];
+  return (
+    <section className="bg-background py-24 md:py-32">
+      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        <SectionHeader
+          eyebrow="The Details"
+          title="Made to Be Noticed Twice."
+          description="Nothing loud. Everything considered."
+          align="center"
+        />
+        <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
+          {details.map((d, i) => (
+            <Reveal key={d.title} delay={i * 0.08}>
+              <div className="hover-zoom overflow-hidden bg-cream">
+                <img src={d.img} alt={d.title} className="aspect-square w-full object-cover" loading="lazy" />
+              </div>
+              <h3 className="mt-5 font-display text-2xl">{d.title}</h3>
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">{d.copy}</p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
