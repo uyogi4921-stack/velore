@@ -29,6 +29,51 @@ const SIZES: Record<string, string[]> = {
   Footwear: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10", "UK 11"],
 };
 
+type ChartRow = string[];
+const SIZE_CHARTS: Record<string, { columns: string[]; rows: ChartRow[]; note: string }> = {
+  tops: {
+    columns: ["Size", "Chest (cm)", "Length (cm)", "Shoulder (cm)"],
+    rows: [
+      ["XS", "96", "66", "42"],
+      ["S", "101", "68", "43.5"],
+      ["M", "106", "70", "45"],
+      ["L", "112", "72", "46.5"],
+      ["XL", "118", "74", "48"],
+      ["XXL", "124", "76", "49.5"],
+    ],
+    note: "Garment measurements, laid flat and doubled at the chest. For a relaxed fit, size up once.",
+  },
+  bottoms: {
+    columns: ["Size", "Waist (cm)", "Hip (cm)", "Inseam (cm)"],
+    rows: [
+      ["28", "71", "94", "76"],
+      ["30", "76", "99", "76"],
+      ["32", "81", "104", "77"],
+      ["34", "86", "109", "77"],
+      ["36", "91", "114", "78"],
+      ["38", "96", "119", "78"],
+    ],
+    note: "Waist measured relaxed. Hems arrive unfinished on pleated styles — alteration is complimentary in-store.",
+  },
+  footwear: {
+    columns: ["UK", "EU", "Foot length (cm)"],
+    rows: [
+      ["6", "40", "24.8"],
+      ["7", "41", "25.6"],
+      ["8", "42", "26.4"],
+      ["9", "43", "27.3"],
+      ["10", "44", "28.1"],
+      ["11", "45", "28.9"],
+    ],
+    note: "Measured heel to longest toe. Between sizes, take the half size down — the moccasin moulds to the foot.",
+  },
+};
+
+const chartFor = (category: string) =>
+  category === "Footwear" ? SIZE_CHARTS.footwear
+  : category === "Chinos" || category === "Gurkhas" ? SIZE_CHARTS.bottoms
+  : SIZE_CHARTS.tops;
+
 function PDP() {
   const { slug } = useParams({ from: "/product/$slug" });
   const product = products.find((p) => p.slug === slug) ?? products[0];
@@ -36,6 +81,8 @@ function PDP() {
   const [size, setSize] = useState(sizes[2]);
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
+  const [showChart, setShowChart] = useState(false);
+  const chart = chartFor(product.category);
   const gallery = product.images;
   const colorways = product.colorways.map(bySlug).filter(Boolean);
   const recs = product.styledWith.map(bySlug).filter(Boolean);
@@ -134,8 +181,39 @@ function PDP() {
               <div className="mt-8">
                 <div className="flex items-center justify-between">
                   <p className="text-[11px] uppercase tracking-luxe">Size</p>
-                  <button className="text-[11px] uppercase tracking-luxe text-muted-foreground hover:text-gold">Fit guide</button>
+                  <button
+                    onClick={() => setShowChart(!showChart)}
+                    aria-expanded={showChart}
+                    className="text-[11px] uppercase tracking-luxe text-muted-foreground transition hover:text-gold"
+                  >
+                    {showChart ? "Hide size chart" : "Size chart"}
+                  </button>
                 </div>
+                {showChart && (
+                  <div className="mt-4 border border-border bg-cream/60 p-4">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs">
+                        <thead>
+                          <tr>
+                            {chart.columns.map((c) => (
+                              <th key={c} className="border-b border-border pb-2 pr-4 font-normal uppercase tracking-luxe text-[10px] text-muted-foreground">{c}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {chart.rows.map((row) => (
+                            <tr key={row[0]}>
+                              {row.map((cell, ci) => (
+                                <td key={ci} className={`py-2 pr-4 ${ci === 0 ? "font-medium" : "text-muted-foreground"}`}>{cell}</td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">{chart.note}</p>
+                  </div>
+                )}
                 <div className="mt-3 flex flex-wrap gap-2">
                   {sizes.map((s) => (
                     <button

@@ -1,8 +1,7 @@
 import polo from "@/assets/product-polo.jpg";
-import poloNavy from "@/assets/product-polo-navy.jpg";
+import poloNavy from "@/assets/product-polo-navy-clean.jpg";
 import poloCream from "@/assets/product-polo-cream.jpg";
 import gurkha from "@/assets/product-gurkha.jpg";
-import gurkhaOlive from "@/assets/product-gurkha-olive.jpg";
 import gurkhaStone from "@/assets/product-gurkha-stone.jpg";
 import gurkhaDetailNavy from "@/assets/gurkha-detail.jpg";
 import linen from "@/assets/product-linen.jpg";
@@ -31,7 +30,6 @@ import dChinoOlive from "@/assets/details/detail-chino-olive.jpg";
 import dChinoSand from "@/assets/details/detail-chino-sand.jpg";
 import dChinoNavy from "@/assets/details/detail-chino-navy.jpg";
 import dGurkhaCream from "@/assets/details/detail-gurkha-cream.jpg";
-import dGurkhaOlive from "@/assets/details/detail-gurkha-olive.jpg";
 import dGurkhaStone from "@/assets/details/detail-gurkha-stone.jpg";
 import dKnitCamel from "@/assets/details/detail-knit-camel.jpg";
 import dKnitTaupe from "@/assets/details/detail-knit-taupe.jpg";
@@ -147,7 +145,7 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 143,
     colorways: ["riviera-sage-polo", "monaco-navy-polo", "portofino-stone-polo", "cafe-blanc-polo"],
-    styledWith: ["positano-olive-gurkha", "verona-navy-chino", "firenze-penny-loafer"],
+    styledWith: ["verona-navy-chino", "firenze-penny-loafer"],
     modelNote: "Aditya is 6'0\" (183 cm) and wears a size M.",
   },
   {
@@ -277,7 +275,7 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 97,
     colorways: ["amalfi-linen-shirt", "capri-blue-linen", "riviera-air-linen"],
-    styledWith: ["verona-navy-chino", "positano-olive-gurkha", "firenze-penny-loafer"],
+    styledWith: ["verona-navy-chino", "firenze-penny-loafer"],
     modelNote: "Julien is 6'1\" (185 cm) and wears a size M.",
   },
   {
@@ -408,33 +406,8 @@ export const products: Product[] = [
     badge: "Signature",
     rating: 4.9,
     reviews: 178,
-    colorways: ["positano-olive-gurkha", "bellagio-stone-gurkha", "marina-navy-gurkha"],
+    colorways: ["bellagio-stone-gurkha", "marina-navy-gurkha"],
     styledWith: ["cafe-blanc-polo", "amalfi-linen-shirt", "firenze-penny-loafer"],
-    modelNote: "Théo is 6'2\" (188 cm) and wears a 32.",
-  },
-  {
-    slug: "positano-olive-gurkha",
-    name: "Positano Gurkha",
-    category: "Gurkhas",
-    price: 5190,
-    image: gurkhaOlive,
-    images: [gurkhaOlive, dGurkhaOlive],
-    tagline: "Structured twill, fluid drape.",
-    color: "Olive",
-    colorHex: "#5C6350",
-    fabric: "Cotton-lyocell twill, 280 GSM — dry hand, fluid drape",
-    fit: "High-rise, double forward pleats, full through the thigh with a deep taper.",
-    details: [
-      "Signature double self-belt with antique-brass D-rings",
-      "Extended curtain waistband, hand-tacked",
-      "Slant pockets cut on the bias to stay closed",
-      "Pick-stitched fly and pocket openings",
-    ],
-    care: "Dry clean recommended. Steam between wears.",
-    rating: 4.8,
-    reviews: 132,
-    colorways: ["monaco-cream-gurkha", "bellagio-stone-gurkha", "marina-navy-gurkha"],
-    styledWith: ["amalfi-cream-polo", "siena-sand-linen", "firenze-penny-loafer"],
     modelNote: "Théo is 6'2\" (188 cm) and wears a 32.",
   },
   {
@@ -458,7 +431,7 @@ export const products: Product[] = [
     care: "Dry clean recommended. Steam between wears.",
     rating: 4.7,
     reviews: 96,
-    colorways: ["monaco-cream-gurkha", "positano-olive-gurkha", "marina-navy-gurkha"],
+    colorways: ["monaco-cream-gurkha", "marina-navy-gurkha"],
     styledWith: ["monaco-navy-polo", "amalfi-linen-shirt", "firenze-penny-loafer"],
     modelNote: "Théo is 6'2\" (188 cm) and wears a 32.",
   },
@@ -484,7 +457,7 @@ export const products: Product[] = [
     badge: "Nearly Gone",
     rating: 4.9,
     reviews: 64,
-    colorways: ["monaco-cream-gurkha", "positano-olive-gurkha", "bellagio-stone-gurkha"],
+    colorways: ["monaco-cream-gurkha", "bellagio-stone-gurkha"],
     styledWith: ["cafe-blanc-polo", "amalfi-linen-shirt", "firenze-penny-loafer"],
   },
 
@@ -718,7 +691,7 @@ export const products: Product[] = [
     badge: "New Season",
     rating: 4.9,
     reviews: 22,
-    colorways: ["monaco-cream-gurkha", "positano-olive-gurkha", "bellagio-stone-gurkha", "marina-navy-gurkha"],
+    colorways: ["monaco-cream-gurkha", "bellagio-stone-gurkha", "marina-navy-gurkha"],
     styledWith: ["marcello-poplin-shirt", "terrazza-cotton-tee", "firenze-penny-loafer"],
   },
   {
@@ -726,11 +699,11 @@ export const products: Product[] = [
     name: "Positano Ribbed Crew",
     category: "Knitwear",
     price: 5690,
-    image: knitOat,
-    images: [knitOat],
-    tagline: "Wide-rib merino, our warmest gauge.",
-    color: "Oat",
-    colorHex: "#D6C3A8",
+    image: chinoNavy,
+    images: [chinoNavy, knitOat],
+    tagline: "Wide-rib merino — as worn with the Verona Chino.",
+    color: "Ecru",
+    colorHex: "#EAE0CC",
     fabric: "100% extra-fine merino wool, 19.5 micron — 7-gauge wide rib",
     fit: "Regular with give — the rib expands and recovers. Ribbed hem, cuffs and collar.",
     details: [
